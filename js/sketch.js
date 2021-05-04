@@ -3,7 +3,6 @@ class Sketch extends Engine {
     // parameters
     this._duration = 900;
     this._recording = false;
-    this._show_fps = true;
     this._border = 0;
     this._scl = 10; // pixel scaling in final image
     this._temp_canvas_size = 500;
@@ -27,54 +26,53 @@ class Sketch extends Engine {
       console.log("%c Recording started", "color: green; font-size: 2rem");
     }
 
-    const percent = (this._frameCount % this._duration) / this._duration;
-    //const percent = 0.5;
-    const time_theta = ease(percent) * Math.PI;
-    const trig = Math.sin(time_theta);
-    const eased = ease(trig);
-    const scl = this._scl;
+    const percent = (this._frameCount % this._duration) / this._duration; // time elapsed
+    const time_theta = ease(percent) * Math.PI; // angle used to loop time
+    const trig = Math.sin(time_theta); // trigonometry function in range [0-1], called often
+    const eased = ease(trig); // eased percentage in range [0-1]
+    const scl = this._scl; // line scale
 
     this.ctx.save();
 
-    this.ctx.fillStyle = "rgb(35, 35, 35)";
+    this.ctx.fillStyle = "rgb(35, 35, 35)"; // dark background
     this.ctx.fillRect(0, 0, this.width, this.height);
-    this.ctx.globalCompositeOperation = "screen";
+    this.ctx.globalCompositeOperation = "screen"; // enables color aberration
 
-    for (let y = 0; y <= this.height + scl; y += scl) {
+    for (let y = this._border * this.height; y < this.height * (1 - this._border); y += scl) {
       // is the line in the old canvas aswell?
       const row_picked = this._pixels.filter(p => Math.abs(p.y - y) < this._temp_canvas_ratio);
 
       this.ctx.save();
       this.ctx.translate(0, y);
-      for (let x = 0; x <= this.width + scl; x += scl) {
-        // is this col picked? since the line is already picked, the pixel is picked
+      for (let x = this._border * this.width; x < this.width * (1 - this._border); x += scl) {
+        // is this pixel picked? since the line is already picked, the pixel is picked
         const pixel_picked = row_picked.some(p => Math.abs(p.x - x) < this._temp_canvas_ratio) && Math.random() <= eased;
 
-        const len = pixel_picked ? 0.35 * scl : 0.5 * scl;
-        const dir = pixel_picked ? -1 : 1;
-        const alpha = pixel_picked ? 1 : 0.8;
-        const channel = pixel_picked ? 240 : 210;
-        const line_width = pixel_picked ? 2 : 1;
-        const dpos = pixel_picked ? eased * scl / 2 * trig : 0;
+        const len = pixel_picked ? 0.3 * scl : 0.5 * scl; // line length
+        const scale_y = pixel_picked ? -1 : 1; // flip 
+        const alpha = pixel_picked ? 1 : 0.8; // transparency
+        const channel = pixel_picked ? 250 : 210; // amout of white 
+        const line_width = pixel_picked ? 2 : 1; // self explanatory
+        const dpos = pixel_picked ? eased * scl / 2 * trig : 0; // position delta to add some more variation
 
         this.ctx.strokeStyle = `rgba(${channel}, ${channel}, ${channel}, ${alpha})`;
 
         this.ctx.lineWidth = line_width;
         this.ctx.save();
         this.ctx.translate(x + dpos, dpos);
-        this.ctx.scale(1, dir);
+        this.ctx.scale(1, scale_y);
 
         if (pixel_picked) {
           // aberration variables
           const offset = 2 * trig;
-          const thickness = 2;
+          const aberration_width = 2;
 
           // draw aberration
-          this.ctx.lineWidth = thickness;
+          this.ctx.lineWidth = aberration_width;
 
           this.ctx.save();
-          this.ctx.translate(-offset, -offset);
-          this.ctx.strokeStyle = "rgba(255, 0, 0, 1)";
+          this.ctx.translate(- 2 * offset, 0);
+          this.ctx.strokeStyle = "rgba(255, 0, 0, 0.5)"; // red
           this.ctx.beginPath();
           this.ctx.moveTo(-len, -len);
           this.ctx.lineTo(len, len);
@@ -83,8 +81,8 @@ class Sketch extends Engine {
 
 
           this.ctx.save();
-          this.ctx.translate(offset, 0);
-          this.ctx.strokeStyle = "rgba(255, 255, 0, 1)";
+          this.ctx.translate(-offset, 0);
+          this.ctx.strokeStyle = "rgba(255, 255, 0, 0.6)"; // yellow
           this.ctx.beginPath();
           this.ctx.moveTo(-len, -len);
           this.ctx.lineTo(len, len);
@@ -93,8 +91,8 @@ class Sketch extends Engine {
 
 
           this.ctx.save();
-          this.ctx.translate(offset, offset);
-          this.ctx.strokeStyle = "rgba(0, 0, 255, 1)";
+          this.ctx.translate(2 * offset, 0);
+          this.ctx.strokeStyle = "rgba(0, 0, 255, 1)"; // blue
           this.ctx.beginPath();
           this.ctx.moveTo(-len, -len);
           this.ctx.lineTo(len, len);
@@ -123,8 +121,6 @@ class Sketch extends Engine {
         console.log("%c Recording ended", "color: red; font-size: 2rem");
       }
     }
-
-    if (this._show_fps && this.frameCount % 60 == 0) console.log(this.frameRate);
   }
 
   _loadTextPixels() {
@@ -149,7 +145,7 @@ class Sketch extends Engine {
     temp_ctx.font = `${(height - border) / 4}px Hack`;
     temp_ctx.fillText("BROKEN", width / 2, (height - border / 2) / 6 + border / 2);
     temp_ctx.fillText("INTO", width / 2, (height - border / 2) / 2 + border / 2);
-    temp_ctx.fillText("LINES", width / 2, (height - border / 2) * 5 / 6 + border / 2);
+    temp_ctx.fillText("PIECES", width / 2, (height - border / 2) * 5 / 6 + border / 2);
 
     // get pixels
     const pixels = temp_ctx.getImageData(0, 0, width, height);
