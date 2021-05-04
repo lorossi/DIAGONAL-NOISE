@@ -1,6 +1,6 @@
 @font-face {
-  font-family: Roboto;
-  src: url(fonts/Roboto-Light.ttf);
+  font-family: Hack;
+  src: url(fonts/Hack-Bold.ttf);
 }
 
 * {
@@ -10,7 +10,7 @@
 }
 
 body {
- font-family: Roboto;
+ font-family: Hack;
  font-size: var(--text-size);
  background-color: var(--background-color);
  color: var(--text-color);
