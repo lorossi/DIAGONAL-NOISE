@@ -55,12 +55,13 @@ class Sketch extends Engine {
         const alpha = pixel_picked ? 1 : 0.8;
         const channel = pixel_picked ? 240 : 210;
         const line_width = pixel_picked ? 2 : 1;
+        const dpos = pixel_picked ? eased * scl / 2 * trig : 0;
 
         this.ctx.strokeStyle = `rgba(${channel}, ${channel}, ${channel}, ${alpha})`;
 
         this.ctx.lineWidth = line_width;
         this.ctx.save();
-        this.ctx.translate(x, 0);
+        this.ctx.translate(x + dpos, dpos);
         this.ctx.scale(1, dir);
 
         if (pixel_picked) {
@@ -73,7 +74,7 @@ class Sketch extends Engine {
 
           this.ctx.save();
           this.ctx.translate(-offset, -offset);
-          this.ctx.strokeStyle = "rgb(255, 0, 0)";
+          this.ctx.strokeStyle = "rgba(255, 0, 0, 1)";
           this.ctx.beginPath();
           this.ctx.moveTo(-len, -len);
           this.ctx.lineTo(len, len);
@@ -83,7 +84,7 @@ class Sketch extends Engine {
 
           this.ctx.save();
           this.ctx.translate(offset, 0);
-          this.ctx.strokeStyle = "rgba(0, 255, 0, 0.6)";
+          this.ctx.strokeStyle = "rgba(255, 255, 0, 1)";
           this.ctx.beginPath();
           this.ctx.moveTo(-len, -len);
           this.ctx.lineTo(len, len);
@@ -93,7 +94,7 @@ class Sketch extends Engine {
 
           this.ctx.save();
           this.ctx.translate(offset, offset);
-          this.ctx.strokeStyle = "rgb(0, 0, 255)";
+          this.ctx.strokeStyle = "rgba(0, 0, 255, 1)";
           this.ctx.beginPath();
           this.ctx.moveTo(-len, -len);
           this.ctx.lineTo(len, len);
