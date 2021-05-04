@@ -50,11 +50,11 @@ class Sketch extends Engine {
         // is this col picked? since the line is already picked, the pixel is picked
         const pixel_picked = row_picked.some(p => Math.abs(p.x - x) < this._temp_canvas_ratio) && Math.random() <= eased;
 
-        const len = pixel_picked ? 0.4 * scl : 0.5 * scl;
+        const len = pixel_picked ? 0.35 * scl : 0.5 * scl;
         const dir = pixel_picked ? -1 : 1;
-        const alpha = pixel_picked ? 1 : 0.75;
-        const channel = 240;
-        const line_width = 2;
+        const alpha = pixel_picked ? 1 : 0.8;
+        const channel = pixel_picked ? 240 : 210;
+        const line_width = pixel_picked ? 2 : 1;
 
         this.ctx.strokeStyle = `rgba(${channel}, ${channel}, ${channel}, ${alpha})`;
 
