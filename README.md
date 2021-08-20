@@ -1,11 +1,13 @@
-# Empty HTML5 Canvas Project
+# DIAGONAL NOISE
 
-I got bored of creating a new document every time.
+I already mentioned that I like playing with shapes, colors and text.
+This is one of the many videos that I made and only recently decided to post.
 
-Contains all the needed files to create a new HTML5 page with a JS canvas inside.
+I don't know what I am not doing right but all my GIFs lately have been very big. *What am I doing wrong, FFMPEG? TELL ME!*
+Anyway, you can check out a few frames here below or have a look at the rendered output on my [Instagram profile](https://www.instagram.com/lorossi).
 
-Just clone the repo or download the last release.
+![frame-1](output/0000227.png)
 
-## Credits
+![frame-2](output/0000229.png)
 
-This project is distributed under Attribution 4.0 International (CC BY 4.0) license.
+![frame-3](output/0000483.png)
