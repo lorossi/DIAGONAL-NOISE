@@ -27,6 +27,7 @@ class Sketch extends Engine {
     }
 
     const percent = (this._frameCount % this._duration) / this._duration; // time elapsed
+
     const time_theta = ease(percent) * Math.PI; // angle used to loop time
     const trig = Math.sin(time_theta); // trigonometry function in range [0-1], called often
     const eased = ease(trig); // eased percentage in range [0-1]
@@ -34,12 +35,12 @@ class Sketch extends Engine {
 
     this.ctx.save();
 
-    this.ctx.fillStyle = "rgb(35, 35, 35)"; // dark background
+    this.ctx.fillStyle = "rgb(15, 15, 15)"; // dark background
     this.ctx.fillRect(0, 0, this.width, this.height);
     this.ctx.globalCompositeOperation = "screen"; // enables color aberration
 
     for (let y = this._border * this.height; y < this.height * (1 - this._border); y += scl) {
-      // is the line in the old canvas aswell?
+      // is the line in the old canvas as well?
       const row_picked = this._pixels.filter(p => Math.abs(p.y - y) < this._temp_canvas_ratio);
 
       this.ctx.save();
@@ -50,8 +51,8 @@ class Sketch extends Engine {
 
         const len = pixel_picked ? 0.3 * scl : 0.5 * scl; // line length
         const scale_y = pixel_picked ? -1 : 1; // flip 
-        const alpha = pixel_picked ? 1 : 0.8; // transparency
-        const channel = pixel_picked ? 250 : 210; // amout of white 
+        const alpha = pixel_picked ? 0.75 : 1; // transparency
+        const channel = pixel_picked ? 240 : 150; // amount of white 
         const line_width = pixel_picked ? 2 : 1; // self explanatory
         const dpos = pixel_picked ? eased * scl / 2 * trig : 0; // position delta to add some more variation
 
@@ -72,7 +73,7 @@ class Sketch extends Engine {
 
           this.ctx.save();
           this.ctx.translate(- 2 * offset, 0);
-          this.ctx.strokeStyle = "rgba(255, 0, 0, 0.5)"; // red
+          this.ctx.strokeStyle = "rgba(255, 0, 0, 0.9)"; // red
           this.ctx.beginPath();
           this.ctx.moveTo(-len, -len);
           this.ctx.lineTo(len, len);
@@ -82,7 +83,7 @@ class Sketch extends Engine {
 
           this.ctx.save();
           this.ctx.translate(-offset, 0);
-          this.ctx.strokeStyle = "rgba(255, 255, 0, 0.6)"; // yellow
+          this.ctx.strokeStyle = "rgba(255, 255, 0, 0.9)"; // yellow
           this.ctx.beginPath();
           this.ctx.moveTo(-len, -len);
           this.ctx.lineTo(len, len);
@@ -92,7 +93,7 @@ class Sketch extends Engine {
 
           this.ctx.save();
           this.ctx.translate(2 * offset, 0);
-          this.ctx.strokeStyle = "rgba(0, 0, 255, 1)"; // blue
+          this.ctx.strokeStyle = "rgba(0, 0, 255, 0.9)"; // blue
           this.ctx.beginPath();
           this.ctx.moveTo(-len, -len);
           this.ctx.lineTo(len, len);
