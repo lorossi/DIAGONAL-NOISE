@@ -2,7 +2,7 @@ class Sketch extends Engine {
   preload() {
     // parameters
     this._duration = 900;
-    this._recording = false;
+    this._recording = true;
     this._border = 0;
     this._scl = 10; // pixel scaling in final image
     this._temp_canvas_size = 500;
@@ -73,7 +73,7 @@ class Sketch extends Engine {
 
           this.ctx.save();
           this.ctx.translate(- 2 * offset, 0);
-          this.ctx.strokeStyle = "rgba(255, 0, 0, 0.9)"; // red
+          this.ctx.strokeStyle = "rgba(255, 0, 0, 0.6)"; // red
           this.ctx.beginPath();
           this.ctx.moveTo(-len, -len);
           this.ctx.lineTo(len, len);
@@ -83,7 +83,7 @@ class Sketch extends Engine {
 
           this.ctx.save();
           this.ctx.translate(-offset, 0);
-          this.ctx.strokeStyle = "rgba(255, 255, 0, 0.9)"; // yellow
+          this.ctx.strokeStyle = "rgba(255, 255, 0, 0.6)"; // yellow
           this.ctx.beginPath();
           this.ctx.moveTo(-len, -len);
           this.ctx.lineTo(len, len);
@@ -93,7 +93,7 @@ class Sketch extends Engine {
 
           this.ctx.save();
           this.ctx.translate(2 * offset, 0);
-          this.ctx.strokeStyle = "rgba(0, 0, 255, 0.9)"; // blue
+          this.ctx.strokeStyle = "rgba(0, 0, 255, 0.8)"; // blue
           this.ctx.beginPath();
           this.ctx.moveTo(-len, -len);
           this.ctx.lineTo(len, len);
